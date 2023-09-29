@@ -1,0 +1,5 @@
+﻿  Source.cpp
+D:\Робочий стіл\Project3\Project3\Source.cpp(95,30): warning C4244: инициализация: преобразование "time_t" в "long", возможна потеря данных
+D:\Робочий стіл\Project3\Project3\Source.cpp(96,25): warning C4552: "/": результат выражения не используется
+D:\Робочий стіл\Project3\Project3\Source.cpp(173,27): warning C4018: <: несоответствие типов со знаком и без знака
+  Project3.vcxproj -> D:\Робочий стіл\Project3\Debug\Project3.exe

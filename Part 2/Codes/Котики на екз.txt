@@ -1,0 +1,586 @@
+5)Написати функцію сортування зв’язаного списку методом вибору мінімального
+елементу.
+
+#include <iostream>
+
+using namespace std;
+
+struct list {
+	int info;
+	list* prev, * next;
+};
+
+list* AddToList(list*, list*);
+void PrintList(list*, list*);
+void SortList(list*&, list*&);
+void DestroyList(list*&, list*&);
+
+int main() 
+{
+	int n, number;
+	list* head = new list;
+	list* tail = new list;
+	head->next = tail;
+	tail->prev = head;
+	cout << "\nEnter the number of elements = ";
+	cin >> n;
+	list* last = head;
+	for (int i = 0; i < n; i++) {
+		cout << "\nEnter the number = ";
+		cin >> number;
+		list* node = new list;
+		node->info = number;
+		last = AddToList(last, node);
+	}
+	cout << "\nYour list: ";
+	PrintList(head, tail);
+	SortList(head, tail);
+	cout << "\nSorted list: ";
+	PrintList(head, tail);
+	DestroyList(head, tail);
+
+}
+
+list* AddToList(list* last, list* node) {
+	//функція вставляє елемент node в список, після елементу last та перевстановлює звязки
+	//повертає адресу вставленого елементу
+	if (last && node)
+	{
+		node->prev = last;
+		node->next = last->next;
+		last->next = node;
+		node->next->prev = node;
+		return node;
+	}
+	else
+		return NULL;
+}
+
+void PrintList(list* head, list* tail)
+{
+	list* node = head->next;
+	while (node != tail)
+	{
+		cout << node->info << ' ';
+		node = node->next;
+	}
+	cout << endl;
+}
+
+void SortList(list*& head, list*& tail) {
+	//добудовуємо відсортований список за хвостом несортованого
+	list* last = tail;
+	tail->next = head;
+	head->prev = tail;
+	while (head->next != tail){//поки в списку є елементи
+		list* min = head->next, * node = head->next;//пошук мінімального елементу з залишившихся та видалення
+		while (node != tail)
+		{
+			if (node->info < min->info)
+				min = node;
+			node = node->next;
+		}
+		//розрив звязків, попередній та наступний елемент вказують один на одного, в обхід мінімального
+		min->next->prev = min->prev;
+		min->prev->next = min->next;
+
+		last = AddToList(last, min);//знайдений елемент додаємо на початок нового списку
+	}
+	swap(head, tail);//обмін голови та хвоста списку
+}
+
+void DestroyList(list*& head, list*& tail){
+	list* next = NULL;
+	while (next != tail) {
+		next = head->next;
+		delete head;
+		head = next;
+	}
+	delete tail;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+6). Написати функцію сортування зв’язаного списку методом вибору максимального
+елементу
+#include <iostream>
+
+using namespace std;
+
+struct list {
+	int info;
+	list* prev, * next;
+};
+
+list* AddToList(list*, list*);
+void PrintList(list*, list*);
+void SortList(list*&, list*&);
+void DestroyList(list*&, list*&);
+
+int main() 
+{
+	int n, number;
+	list* head = new list;
+	list* tail = new list;
+	head->next = tail;
+	tail->prev = head;
+	cout << "\nEnter the number of elements = ";
+	cin >> n;
+	list* last = head;
+	for (int i = 0; i < n; i++) {
+		cout << "\nEnter the number = ";
+		cin >> number;
+		list* node = new list;
+		node->info = number;
+		last = AddToList(last, node);
+	}
+	cout << "\nYour list: ";
+	PrintList(head, tail);
+	SortList(head, tail);
+	cout << "\nSorted list: ";
+	PrintList(head, tail);
+	DestroyList(head, tail);
+
+}
+
+list* AddToList(list* last, list* node) {
+	//функція вставляє елемент node в список, після елементу last та перевстановлює звязки
+	//повертає адресу вставленого елементу
+	if (last && node)
+	{
+		node->prev = last;
+		node->next = last->next;
+		last->next = node;
+		node->next->prev = node;
+		return node;
+	}
+	else
+		return NULL;
+}
+
+void PrintList(list* head, list* tail)
+{
+	list* node = head->next;
+	while (node != tail)
+	{
+		cout << node->info << ' ';
+		node = node->next;
+	}
+	cout << endl;
+}
+
+void SortList(list*& head, list*& tail) {
+	//добудовуємо відсортований список за хвостом несортованого
+	list* last = tail;
+	tail->next = head;
+	head->prev = tail;
+	while (head->next != tail){//поки в списку є елементи
+		list* max = head->next, * node = head->next;//пошук максимального елементу з залишившихся та видалення
+		while (node != tail)
+		{
+			if (node->info > max->info)
+				max = node;
+			node = node->next;
+		}
+		//розрив звязків, попередній та наступний елемент вказують один на одного, в обхід максимального
+		max->next->prev = max->prev;
+		max->prev->next = max->next;
+
+		last = AddToList(last, max);//знайдений елемент додаємо на початок нового списку
+	}
+	swap(head, tail);//обмін голови та хвоста списку
+}
+
+void DestroyList(list*& head, list*& tail){
+	list* next = NULL;
+	while (next != tail) {
+		next = head->next;
+		delete head;
+		head = next;
+	}
+	delete tail;
+}
+
+
+
+7)Написати функцію сортування зв'язаного списку методом вставки
+
+#include <iostream>
+
+using namespace std;
+
+struct list {
+	int info;
+	list* prev, * next;
+};
+
+list* AddToList(list*, list*);
+void PrintList(list*, list*);
+void SortList(list*&, list*&);
+void DestroyList(list*&, list*&);
+
+int main() 
+{
+	int n, number;
+	list* head = new list;
+	list* tail = new list;
+	head->next = tail;
+	tail->prev = head;
+	cout << "\nEnter the number of elements = ";
+	cin >> n;
+	list* last = head;
+	for (int i = 0; i < n; i++) {
+		cout << "\nEnter the number = ";
+		cin >> number;
+		list* node = new list;
+		node->info = number;
+		last = AddToList(last, node);
+	}
+	cout << "\nYour list: ";
+	PrintList(head, tail);
+	SortList(head, tail);
+	cout << "\nSorted list: ";
+	PrintList(head, tail);
+	DestroyList(head, tail);
+
+}
+
+list* AddToList(list* last, list* node) {
+	//функція вставляє елемент node в список, після елементу last та перевстановлює зв'язки
+	//повертає адресу вставленого елементу
+	if (last && node)
+	{
+		node->prev = last;
+		node->next = last->next;
+		last->next = node;
+		node->next->prev = node;
+		return node;
+	}
+	else
+		return NULL;
+}
+
+void PrintList(list* head, list* tail)
+{
+	list* node = head->next;
+	while (node != tail)
+	{
+		cout << node->info << ' ';
+		node = node->next;
+	}
+	cout << endl;
+}
+
+void SortList(list*& head, list*& tail) {
+	list* left, * right = head->next;
+	list* node = new list;
+	bool flag = false;
+	while (right != tail) {
+		node->info = right->info; //поточний вузол
+		left = right->prev;
+		while (left && node->info < left->info) {//поточний вузол порівнюється з усіма, що є ліворуч від нього
+			(left->next)->info = left->info;
+			if (left->prev) left = left->prev; // якщо left->prev існує, то перехід на попередній елемент
+			else { // якщо left->prev не існує, то цикл зупиняється і піднімається прапорець
+				flag = true;
+				break;
+			}
+			//усі вузли, що є більшими зсуваються праворуч
+		}
+		
+		//якщо знайшовся елемент менший за поточний, то цей поточний елемент стає на своє місце
+		if (!flag) (left->next)->info = node->info; // якщо left->prev існує, то змінюємо значення наступного вузла
+		else { // якщо left->prev не існує, то найперший елемент буде left, а не left->next
+			left->info = node->info;
+			flag = false;
+		}
+		right = right->next;
+	}
+}
+
+void DestroyList(list*& head, list*& tail){
+	list* next = NULL;
+	while (next != tail) {
+		next = head->next;
+		delete head;
+		head = next;
+	}
+	delete tail;
+}
+
+
+
+
+
+
+
+
+8)Написати функцію сортування зв’язаного списку методом Неймана.
+#include <iostream>
+
+using namespace std;
+
+struct list {
+	int info;
+	list* prev, * next;
+};
+
+list* AddToList(list*, list*);
+void PrintList(list*, list*);
+void SortList(list*&, list*&);
+void DestroyList(list*&, list*&);
+int SizeList(list*, list*);
+
+int main() 
+{
+	int n, number;
+	list* head = new list;
+	list* tail = new list;
+	head->next = tail;
+	tail->prev = head;
+	cout << "\nEnter the number of elements = ";
+	cin >> n;
+	list* last = head;
+	for (int i = 0; i < n; i++) {
+		cout << "\nEnter the number = ";
+		cin >> number;
+		list* node = new list;
+		node->info = number;
+		last = AddToList(last, node);
+	}
+	cout << "\nYour list: ";
+	PrintList(head, tail);
+	SortList(head, tail);
+	cout << "\nSorted list: ";
+	PrintList(head, tail);
+	DestroyList(head, tail);
+
+}
+
+list* AddToList(list* last, list* node) {
+	//функція вставляє елемент node в список, після елементу last та перевстановлює зв'язки
+	//повертає адресу вставленого елементу
+	if (last && node)
+	{
+		node->prev = last;
+		node->next = last->next;
+		last->next = node;
+		node->next->prev = node;
+		return node;
+	}
+	else
+		return NULL;
+}
+
+void PrintList(list* head, list* tail)
+{
+	list* node = head->next;
+	while (node != tail)
+	{
+		cout << node->info << ' ';
+		node = node->next;
+	}
+	cout << endl;
+}
+
+void SortList(list*& head, list*& tail) {
+	list* node1 = head->next;
+	list* node2 = node1->next;
+	bool flag = true;
+	int size = SizeList(head, tail);
+	while (flag && size > 1) {
+		flag = false;
+		size--;
+		node1 = head->next;
+		node2 = node1->next;
+		for (int i = 0; i < size; i++) {
+			if (node1->info > node2->info) {
+				list* temp = node1;//тимчасова змінна що зберігає зв'язки першого вузла
+				node2->next->prev = node1;
+				node1->next = node2->next;
+				//встановлення node1 на місце node2 та зміна зв'язків
+
+				temp->prev->next = node2;
+				node2->prev = temp->prev;
+				//встановлення node2 на місце node1 та зміна зв'язків
+
+				node2->next = node1;
+				node1->prev = node2;
+				//встановлення нових зв'язків між вузлами node1 та node2
+
+				flag = true;//прапорець що вказує на обмін
+				node2 = node1->next;//перехід на наступні вузли, якщо обмін відбувся
+			}
+			else { // перехід на наступні вузли, якщо обмін не відбувся
+				node2 = node2->next;
+				node1 = node1->next;
+			}
+		}
+	}
+}
+
+void DestroyList(list*& head, list*& tail){
+	list* next = NULL;
+	while (next != tail) {
+		next = head->next;
+		delete head;
+		head = next;
+	}
+	delete tail;
+}
+
+int SizeList(list* head, list* tail) {
+	list* node = head->next;
+	int n = 0;
+	while (node != tail) {
+		n++;
+		node = node->next;
+	}
+	return n;
+}
+
+
+
+9)Написати функцію сортування зв'язаного списку методом швидкого сортування поділом
+#include <iostream>
+
+using namespace std;
+
+struct list {
+	int info;
+	list* prev, * next;
+};
+
+list* AddToList(list*, list*);
+void PrintList(list*, list*);
+void SortList(list*&, list*&, int, int);
+void DestroyList(list*&, list*&);
+
+int main() 
+{
+	int n, number;
+	list* head = new list;
+	list* tail = new list;
+	head->next = tail;
+	tail->prev = head;
+	cout << "\nEnter the number of elements = ";
+	cin >> n;
+	list* last = head;
+	for (int i = 0; i < n; i++) {
+		cout << "\nEnter the number = ";
+		cin >> number;
+		list* node = new list;
+		node->info = number;
+		last = AddToList(last, node);
+	}
+	cout << "\nYour list: ";
+	PrintList(head, tail);
+	SortList(head, tail, 0, n - 1);
+	cout << "\nSorted list: ";
+	PrintList(head, tail);
+	DestroyList(head, tail);
+
+}
+
+list* AddToList(list* last, list* node) {
+	//функція вставляє елемент node в список, після елементу last та перевстановлює зв'язки
+	//повертає адресу вставленого елементу
+	if (last && node)
+	{
+		node->prev = last;
+		node->next = last->next;
+		last->next = node;
+		node->next->prev = node;
+		return node;
+	}
+	else
+		return NULL;
+}
+
+void PrintList(list* head, list* tail)
+{
+	list* node = head->next;
+	while (node != tail)
+	{
+		cout << node->info << ' ';
+		node = node->next;
+	}
+	cout << endl;
+}
+
+void SortList(list*& head, list*& tail, int first, int last) {
+	int left = first;
+	int right = last;
+	//first, last - позиції початку і кінця частини списку, яка сортується
+
+	list* LeftNode = head;
+	for (int i = 0; i <= left; i++) {
+		LeftNode = LeftNode->next;
+	}//цикл визначення лівого вузла
+
+	list* RightNode = head;
+	for (int i = 0; i <= right; i++) {
+		RightNode = RightNode->next;
+	}//цикл визначення правого вузла
+	//індекси, що пробігають частини масиву назустріч один одному
+	
+	int middle = (left + right) / 2;//позиція середини списку
+	list* CenterNode = head;
+	for (int i = 0; i <= middle; i++) {
+		CenterNode = CenterNode->next;
+	}//цикл визначення центрального опорного вузла між лівим і правим
+	
+	while (left <= right) {
+		//ліворуч знаходяться елементи менші за опорний
+		while (LeftNode->info < CenterNode->info) {
+			left = left + 1;
+			LeftNode = LeftNode->next;
+		}
+		//праворуч знаходяться елементи більші за опорний
+		while (RightNode->info > CenterNode->info) {
+			right = right - 1;
+			RightNode = RightNode->prev;
+		}
+		if (left <= right) {
+			//обмін елементів між двома частинами списку
+			int temp = RightNode->info;
+			RightNode->info = LeftNode->info;
+			LeftNode->info = temp;
+			
+			//перехід на наступні елементи
+			left = left + 1;
+			LeftNode = LeftNode->next;
+			right = right - 1;
+			RightNode = RightNode->prev;
+		}
+	}
+	//сортування нових частин масиву 
+	if (first < right) {
+		SortList(head, tail, first, right);
+	}
+	if (left < last) {
+		SortList(head, tail, left, last);
+	}
+}
+
+void DestroyList(list*& head, list*& tail){
+	list* next = NULL;
+	while (next != tail) {
+		next = head->next;
+		delete head;
+		head = next;
+	}
+	delete tail;
+}

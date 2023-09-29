@@ -1,0 +1,15 @@
+﻿  Source.cpp
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(16,5): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(18,9): error C2065: 'cin': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(19,24): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(22,5): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(26,9): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(29,5): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(31,9): error C2065: 'cin': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(32,24): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(35,5): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(39,9): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(42,5): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(47,5): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(51,5): error C2065: 'cout': undeclared identifier
+C:\Users\Alina\source\repos\Project1\Project1\Source.cpp(84,9): error C2065: 'cout': undeclared identifier

@@ -1,0 +1,285 @@
+Лінійні списки завдання 1:
+#include <iostream>
+
+using namespace std;
+
+struct stack
+{
+    int info; //інформаційна частина
+    stack* adr = NULL;  //вказівник на наступний елемент стеку
+};
+
+//прототипи функцій створення елементу,виводу та видалення стеку
+void AddtoStack(stack*&, int);
+void PrintStack(stack*);
+void DestroyStack(stack*&);
+
+int main()
+{
+    int n;
+    do {
+        cout << "\nEnter 0 if you want to exit";
+        cout << "\nEnter a natural number = ";
+        cin >> n;
+        int exit = n;//змінна, що потрібна для виходу, оскільки n в подальшому стане 0
+        if (exit == 0) return 0; //перевірка на вихід з програми
+        n = (n < 0) ? -n : n; //перевірка чи число не є від'ємним
+        stack* top = NULL;//порожній елемент
+        do {
+            int digit = n % 10;//остача від ділення на 10
+            if (digit == 0 || digit == 1) {
+                AddtoStack(top, !digit);
+            }
+            else {
+                AddtoStack(top, digit);
+            }
+            n /= 10;//зменшення числа, аби знищити остачу
+        } while (n != 0); //алгоритм розділення числа на цифри
+        cout << "\nSeparated digits and swaped digits " << " = " << "\t";
+        PrintStack(top);
+        DestroyStack(top);
+    } while (exit != 0);//цикл для не виходу з програми
+    return 0;
+}
+
+void AddtoStack(stack*& node, int a) //додавання нового елементу
+{
+    stack* prev = node;
+    node = new stack;
+    node->info = a;
+    node->adr = prev;
+}
+
+void PrintStack(stack* node) //вивід стеку
+{
+    while (node) {
+        cout << node->info << "  ";
+        node = node->adr;
+    }
+    cout << endl;
+}
+
+void DestroyStack(stack*& node) //видалення стеку
+{
+    stack* next;
+    while (node) {
+        next = node->adr;
+        delete node;
+        node = next;
+    }
+}
+
+
+
+
+
+
+
+
+
+Робота з файлами завдання 1
+
+#include<fstream>
+#include<cstring>
+#include<iostream>
+
+#pragma warning(disable:4996)
+
+using namespace std;
+
+const char* f_name = "f.txt";
+
+int EnterNumber();
+bool CreateFile(const char*);
+bool PrintFile(const char*);
+bool CountSymbols(const char*);
+
+int main()
+{
+	cout << "\n1/0 Does the file exists: ";
+	int p = EnterNumber();
+	if (!p) {//перевірка існування файлу
+		if (!CreateFile(f_name)) {// перевірка чи файл створено
+			cout << "\nFile" << f_name << "is not created.";
+			return 1;
+		}
+	}
+	if (!PrintFile(f_name)) {//перевірка чи файл виводиться
+		cout << "\nFile" << f_name << " is not shown.";
+		return 1;
+	}
+	cout << "\n------------------------------";
+	if (CountSymbols(f_name)) {//перевірка та розділ тексту на слова
+		cout << "\nCounting the symbols\nNew file: ";
+		PrintFile(f_name);
+	}
+}
+
+int EnterNumber() {//func of entering number
+	char rez[15];
+	bool flag = false;
+	do {
+		flag = false;
+		gets_s(rez);
+		for (int i = 0; i < strlen(rez); i++) {
+			if (!isdigit(rez[i])) { flag = true; }
+		}
+		if (flag == true) cout << "\nВведіть коректне число: ";
+	} while (flag == true); //validation
+	return atoi(rez);
+}
+
+bool CreateFile(const char* f_name) {//функція створення файлу
+	ofstream fout;//відкриття потоку виводу
+	fout.open(f_name);//відкриття файлу
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	char str[BUFSIZ];// створення стрічки для запису її у файл
+	cout << "\nEnter text: ";
+	gets_s(str);
+	fout << str;//запис стрічки у файл
+	fout.close();//закриття файлу
+	return true;
+}
+
+bool PrintFile(const char* f_name) {//функція друку файлу
+	ifstream fin;//відкриття потоку вводу(читання)
+	fin.open(f_name);//відкриття файлу
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	cout << "\nOpened and printed file: ";
+	char ch;
+	while (fin.get(ch)) {//посимвольне читання і вивід файлу
+		cout << ch;
+	}
+	fin.close();//закриття файлу
+	return true;
+}
+
+bool CountSymbols(const char* f_name) {
+	ifstream fin;
+	fin.open(f_name);
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	char ch;
+	int counter = 0;
+	while (fin.get(ch)) {
+		if (ch != ' ')//виключення пробілу як символу
+			counter++;
+	}
+	fin.close();
+
+	ofstream fout;//відкриття потоку виводу
+	fout.open(f_name, ios_base::app);//відкриття файлу для дописування
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	fout << "\nThere are " << counter << " symbols in file.";
+	fout.close();
+	return true;
+}
+
+
+
+
+
+Робота з файлами 2
+
+#include<fstream>
+#include<cstring>
+#include<iostream>
+
+#pragma warning(disable:4996)
+
+using namespace std;
+
+const char* f_name = "f.txt"; 
+const char* g_name = "g.txt";
+
+bool FromFtoG(const char*, const char*);
+bool PrintFile(const char*);
+bool CountSymbols(const char*);
+
+int main()
+{
+	if (!FromFtoG(f_name, g_name)) {
+		cout << "\nFile " << f_name << " is not created.";
+	}
+	cout << "New file g.txt: ";
+	if (!PrintFile(g_name)) {//перевірка чи файл виводиться
+		cout << "\nFile" << g_name << " is not shown.";
+		return 1;
+	}
+	cout << "\n------------------------------";
+	if (CountSymbols(g_name)) {//перевірка та розділ тексту на слова
+		cout << "\nCounting the symbols\nNew file: ";
+		PrintFile(g_name);
+	}
+}
+
+bool FromFtoG(const char* f_name, const char* g_name) {
+	ifstream fin;//відкриття потоку вводу(читання)
+	fin.open(f_name);//відкриття файлу
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	char str[BUFSIZ];
+	fin.getline(str, BUFSIZ, '\0');
+	fin.close();
+	
+	ofstream fout;
+	fout.open(g_name);
+	fout << str;
+	fout.close();
+	return true;
+}
+
+bool PrintFile(const char* file) {//функція друку файлу
+	ifstream fin;//відкриття потоку вводу(читання)
+	fin.open(file);//відкриття файлу
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << file << "not found.";
+		return false;
+	}
+	cout << "\nOpened and printed file: ";
+	char ch;
+	while (fin.get(ch)) {//посимвольне читання і вивід файлу
+		cout << ch;
+	}
+	fin.close();//закриття файлу
+	return true;
+}
+
+bool CountSymbols(const char* file) {
+	ifstream fin;
+	fin.open(file);
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << file << "not found.";
+		return false;
+	}
+	char ch;
+	int counter = 0;
+	while (fin.get(ch)) {
+		if (ch != ' ')
+			counter++;
+	}
+	fin.close();
+
+	ofstream fout;//відкриття потоку виводу
+	fout.open(file, ios_base::app);//відкриття файлу для дописування
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << file << "not found.";
+		return false;
+	}
+	fout << "\nThere are " << counter << " symbols in file.";
+	fout.close();
+	return true;
+}

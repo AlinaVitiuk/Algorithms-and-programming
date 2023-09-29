@@ -1,0 +1,4 @@
+﻿  Source.cpp
+D:\Робочий стіл\Project1\Project1\Source.cpp(7,1): warning C4326: возвращаемый тип "main" должен быть "int", а не "void"
+D:\Робочий стіл\Project1\Project1\Source.cpp(8,26): warning C4305: инициализация: усечение из "double" в "float"
+  Project1.vcxproj -> D:\Робочий стіл\Project1\Debug\Project1.exe

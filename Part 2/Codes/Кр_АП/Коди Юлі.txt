@@ -1,0 +1,348 @@
+
+kod-7
+#include<fstream>
+#include<cstring>
+#include<iostream>
+
+#pragma warning(disable:4996)
+
+using namespace std;
+
+const char* f_name = "f.txt";
+const char* g_name = "g.txt";
+
+bool PrintF(const char*, int&);
+bool CreateG(const char*,int);
+
+
+int main()
+{
+	int count=0;
+	if (!PrintF(f_name, count)) {
+		cout << "\nFile " << f_name << " is not created.";
+		return 1;
+	}
+	
+	if (!CreateG(g_name,count)) {//перевірка чи файл виводиться
+		cout << "\nFile" << g_name << " is not shown.";
+		return 1;
+	}
+	cout << endl << "END\n";
+}
+
+bool PrintF(const char* f_name,int &count) {
+	ifstream fin;//відкриття потоку вводу(читання)
+	fin.open(f_name);//відкриття файлу
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	char ch;
+	cout << "Content from file f.txt :";
+	while (fin.get(ch)) {//посимвольне читання і вивід файлу
+		cout << ch;
+		count++;
+	}
+	fin.close();
+	return true;
+}
+
+bool CreateG(const char* g_name, int count) {//функція створення файлу
+	ofstream fout;//відкриття потоку вводу
+	fout .open(g_name);//відкриття файлу
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << g_name << "not found.";
+		return false;
+	}
+	fout<<count;
+	fout.close();//закриття файлу
+	return true;
+}
+
+kod-8
+#include<fstream>
+#include<cstring>
+#include<iostream>
+
+#pragma warning(disable:4996)
+
+using namespace std;
+
+const char* f_name = "f.txt";
+const char* g_name = "g.txt";
+
+bool PrintFtoG(const char*, const char*, int&);
+bool AddG(const char*, int);
+bool Chusl0(const char*, int&, int);
+
+int main()
+{
+	int size = 0;
+	int chuslo = 0;
+	int count = 0;
+	if (!PrintFtoG(f_name, g_name, size)) {
+		cout << "\nFiles " << f_name << " is not created.";
+		return 1;
+	}
+	if (!Chusl0(g_name, chuslo, size)) {
+		cout << "\nERROR";
+		return 1;
+	}
+	if (!AddG(g_name, chuslo)) {
+		cout << "\nFile" << g_name << " is not shown.";
+		return 1;
+	}
+	cout << endl << "END\n";
+	return 0;
+}
+
+bool Chusl0(const char* g_name, int& sum, int size)
+{
+	fstream file;//відкриття потоку вводу(читання)
+	file.open(g_name, ios::out | ios::in);//відкриття файлу
+	if (!file.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << g_name << "not found.";
+		return 1;
+	}
+
+
+	char ch;                      //посимвольне читання і перезапис у інший файл
+	for (int i = size - 1; i >= 0; i--)
+	{
+		if (file.get(ch))
+		{
+			char* ch1 = &ch;
+			sum += (atoi(ch1)) * int(pow(2, i));
+		}
+	}
+
+	return true;
+	file.close();
+}
+
+bool AddG(const char* g_name, int chuslo)
+{
+	ofstream fout;//відкриття потоку вводу
+	fout.open(g_name, ios_base::app);//відкриття файлу для дописування
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << g_name << "not found.";
+		return false;
+	}
+
+	fout << "-" << chuslo;
+	return true;
+	fout.close();
+	return true;
+}
+
+
+bool PrintFtoG(const char* f_name, const char* g_name, int& size) {
+	ifstream fin;//відкриття потоку вводу(читання)
+	fin.open(f_name);//відкриття файлу
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	ofstream fout;//відкриття потоку запису
+	fout.open(g_name);//відкриття файлу
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << g_name << "not found.";
+		return false;
+	}
+	char ch;
+	while (fin.get(ch)) {//посимвольне читання і перезапис у інший файл
+		fout << ch;
+		size++;
+	}
+	fin.close();
+	fout.close();
+	return true;
+}
+
+
+
+kod-9
+#include<fstream>
+#include<cstring>
+#include<iostream>
+
+#pragma warning(disable:4996)
+
+using namespace std;
+
+const char* f_name = "f.txt";
+const char* g_name = "g.txt";
+
+bool PrintFtoG(const char*, const char*);
+bool AddG(const char*, int*, int );
+bool Chusl0(const char*, int*&, int&);
+
+int main()
+{
+	int len=0;
+	int *chuslo;
+	int count = 0;
+	if (!PrintFtoG(f_name, g_name)) {
+		cout << "\nFiles " << f_name << " is not created.";
+		return 1;
+	}
+	if (!Chusl0(g_name, chuslo,len)) {
+		cout << "\nERROR";
+		return 1;
+	}
+	if (!AddG(g_name, chuslo,len)) {
+		cout << "\nFile" << g_name << " is not shown.";
+		return 1;
+	}
+	cout << endl << "END\n";
+         delete[]chuslo;
+	return 0;
+}
+
+bool Chusl0(const char* g_name, int*& chuslo, int & len)
+{
+	fstream file;//відкриття потоку вводу(читання)
+	file.open(g_name, ios::out | ios::in);//відкриття файлу
+	if (!file.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << g_name << "not found.";
+		return 1;
+	}
+	
+	char ch; char str [BUFSIZ];
+	int size = 0;
+	while (file.get(ch))
+	{
+		str[size] = ch;
+		size++;
+	}
+	str[size + 1] = '/0';
+	
+	int number = atoi(str);
+	int num = number; 
+	do {
+		num = int(num / 2);
+		len++;
+	} while (num > 0);
+
+	 chuslo = new int[len];
+
+	for (int i = 0; i <= len; i++)
+	{
+		chuslo[i] = (number % 2);
+		number = int(number / 2);
+	}
+
+	return true;
+	file.close();
+}
+
+bool AddG(const char* g_name, int *chuslo, int len)
+{
+	ofstream fout;//відкриття потоку вводу
+	fout.open(g_name, ios_base::app);//відкриття файлу для дописування
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << g_name << "not found.";
+		return false;
+	}
+	fout << "-";
+	for (int i = len-1; i >=0; i--)
+	{
+		fout << chuslo[i];
+	}
+	return true;
+	fout.close();
+	return true;
+}
+
+kod-10
+#include<fstream>
+#include<cstring>
+#include<iostream>
+
+#pragma warning(disable:4996)
+
+using namespace std;
+
+const char* f_name = "f.txt";
+
+
+bool FillF(const char*, int&);
+bool AddF(const char*, int*, int );
+bool Chusl0( int*&,int&, int);
+
+int main()
+{
+	int num=0;
+	int len=0;
+	int *chuslo;
+	if (!FillF(f_name,num)) {
+		cout << "\nFile " << f_name << " is not created.";
+		return 1;
+	}
+	if (!Chusl0( chuslo,len,num)) {
+		cout << "\nERROR";
+		return 1;
+	}
+	if (!AddF(f_name, chuslo,len)) {
+		cout << "\nFile" << f_name << " is not shown.";
+		return 1;
+	}
+	cout << endl << "END\n";
+	return 0;
+}
+
+bool Chusl0(int*& chuslo, int & len, int num)
+{
+
+	int number = num; 
+	do {
+		number = int(number / 2);
+		len++;
+	} while (number > 0);
+
+	 chuslo = new int[len];
+
+	for (int i = 0; i <= len; i++)
+	{
+		chuslo[i] = (num % 2);
+		num = int(num / 2);
+	}
+	return true;
+}
+
+bool AddF(const char* f_name, int *chuslo, int len)
+{
+	ofstream fout;//відкриття потоку вводу
+	fout.open(f_name, ios_base::app);//відкриття файлу для дописування
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	fout << "-";
+	for (int i = len-1; i >=0; i--)
+	{
+		fout << chuslo[i];
+	}
+	return true;
+	fout.close();
+	return true;
+}
+
+
+bool FillF(const char* f_name,int &num) {
+	ofstream fout;//відкриття потоку вводу(читання)
+	fout.open(f_name);//відкриття файлу
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nPath to file " << f_name << "not found.";
+		return false;
+	}
+	cout << "Please enter your number - ";
+	char rez[BUFSIZ]; 
+	gets_s(rez);
+	num =atoi(rez);
+	fout << num;
+	fout.close();
+	return true;
+}
+
+

@@ -1,0 +1,351 @@
+------------------------------------------------------------------------------------------------------------------------------
+//Код-7 по файлах інтеграл 
+
+#pragma warning (disable:4996) //директива для уникнення неістотних повідомлень
+#include <iostream>
+#include <fstream>
+#include <string.h>
+
+using namespace std;
+
+int file_size(char*); //функція  для визначення розмірності файлу
+double Integral(double, int, int*); //функція інтегрування інтеграла
+int main()
+{
+    int* arr = NULL; //масив під коефіцієнти многочлена
+    char* f_name = new char[20]; //стрічка з іменем файлу
+    cout << endl << "Enter your file name: "; 
+    cin.getline(f_name, 19);
+    ifstream fin(f_name); //відкриваємо поток зчитування з файлу
+    if (!fin.is_open()) { cout << "\nFile" << f_name << "is not opened."; return 0; }
+    int size = file_size(f_name);
+    arr = new int[size];
+    int num1; int i = 0; //змінна  num1 зберігатиме коефіцієнти зчитуємі з файлу
+    while (!fin.eof()) //поки не кінець файлу зчитуємо числа/коефіцієти і записуємо у наш масив
+    {
+        fin >> num1;
+        while (i < size)
+        {
+            arr[i] = num1;
+            i++;
+            break;
+        }
+
+    }
+    cout << "Integral| [2.34; 5.76] = " << Integral(5.76, size, arr) - Integral(2.34, size, arr) << endl; //рахуємо інтеграл
+  
+    delete[] arr;
+    return 0;
+
+}
+
+
+double Integral(double x, int size, int* arr) //функція інтегрування многочлена повертає результат проінтегрованого многочлена у заданій точці
+{
+    double der = 0;
+    for (int j = size, i = 0; j > 0, i < size; j--, i++)
+    {
+
+        der += arr[i] / j  * pow(x, j);
+
+
+    }
+    return der;
+}
+
+int file_size(char* f_name) //функція для обчислення розмірності файлу
+{
+    int size = 0, num;
+    ifstream fin;
+    fin.open(f_name);
+    if (!fin.is_open()) { cout << "Error! File is not opened.\n"; return -1; }
+    while (!fin.eof())
+    {
+        fin >> num;
+        size++;
+    }
+    size--;
+    fin.close();
+    return size;
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+// Код-8  по файлах похідна
+
+#pragma warning (disable:4996) //директива для уникнення неістотних повідомлень
+#include <iostream>
+#include <fstream>
+#include <string.h>
+
+using namespace std;
+
+int file_size(char*); //функція  для визначення розмірності файлу
+double Derivative(double, int, int*); //функція для пошуку похідної
+int main()
+{
+    int* arr = NULL;
+    char* f_name = new char[20]; //стрічка з іменем файлу
+    cout << endl << "Enter your file name: ";
+    cin.getline(f_name, 19);
+    ifstream fin(f_name);
+    if (!fin.is_open()) { cout << "\nFile" << f_name << "is not opened."; return 0; }
+    int size = file_size(f_name);
+    arr = new int[size];
+    int num1; int i = 0;
+    while (!fin.eof()) //заповнення масиву коефіцієнтами з файлу
+    {
+        fin >> num1;
+        while (i < size)
+        {
+            arr[i] = num1;
+            i++;
+            break;
+        }
+
+    }
+    //передаємо значення ікса у функції і виводимо похідні у тих точках
+    cout << "P'(2.34) = " << Derivative(2.34, size, arr) << endl;
+    cout << "P'(7.2) = " << Derivative(7.2, size, arr) << endl;
+    cout << "P'(5.3) = " << Derivative(5.3, size, arr) << endl;
+    delete[] arr;
+    return 0;
+}
+
+
+double Derivative(double x, int size, int *arr)
+{
+    double der = 0;
+  int size1 = size - 2;
+   
+    for (int j = size1, i = 0; j > 0, i < size; j--, i++)
+    {
+       
+            der += arr[i] * (j + 1) * pow(x, j);
+          
+        
+    }
+    return der;
+}
+
+int file_size(char* f_name) {
+    int size = 0, num;
+    ifstream fin;
+    fin.open(f_name);
+    if (!fin.is_open()) { cout << "Error! File is not opened.\n"; return -1; }
+    while (!fin.eof())
+    {
+        fin >> num;
+        size++;
+    }
+    size--;
+    fin.close();
+    return size;
+}
+----------------------------------------------------------------------------------------------------------------------------
+//Код-9 по файлах  (min max elements)
+
+#pragma warning (disable:4996) //директива для уникнення неістотних повідомлень
+#include <iostream>
+#include <fstream>
+#include <string.h>
+
+using namespace std;
+const char* f_name = "f.txt";
+int file_size(const char*); //функція  для визначення розмірності файлу
+int main()
+{
+    ifstream fin(f_name);
+    if (!fin.is_open())
+    {
+        cout << "\nFile" << f_name << "is not opened.";
+        return 0;
+    }
+    double size = file_size(f_name);// визначаємо розмірність для нашого масиву
+    int num;
+    int max_num, min_num, max_i, min_i, i = 0;
+    fin >> num;
+    max_num = min_num =num;
+
+    while (!fin.eof()) //пошук значень  мін та макс елементів
+    {
+        fin >> num;
+        while (i < size)
+        {
+            if (num > max_num) {
+                max_num = num;
+            }
+            if (num < min_num) {
+                min_num = num;
+            }
+            i++;
+
+            break;
+        }
+    }
+    cout << "\n Min element: \t" << min_num << endl;
+    cout << " Max element: \t" << max_num << endl;
+    fin.close();
+    fin.open(f_name);
+    i = 0;
+    while (!fin.eof()) //пошук всіх індексів мін та макс елементів
+    {
+        fin >> num;
+        while (i < size)
+        {
+            if (num == max_num) {
+                cout << "Index max element in file: \t" << i + 1 << endl;
+            }
+
+            if (num == min_num) {
+                cout << "Index min element in file : \t" << i + 1 << endl;
+            }
+
+            i++;
+            break;
+
+        }
+
+    }
+    fin.close();
+    cout << "END!";
+    return 0;
+}
+
+
+int file_size(const char* f_name)
+{
+    int size = 0,num;
+    ifstream fin;
+    fin.open(f_name);
+    if (!fin.is_open()){ cout << "Error! File is not opened.\n"; return -1; }
+    while (!fin.eof())
+    {
+        fin >>num;
+        size++;
+    }
+    size--;
+    fin.close();
+    return size;
+}
+
+---------------------------------------------------------------------------------------------------------------------------
+//Код-4 по списках!
+
+#include <iostream>
+using namespace std;
+struct stack  //струкура стек
+{
+    int info;   
+    stack* adr = NULL;   //вказівник на наступний вузoл стеку
+    stack* prev = NULL;   //вказівник на попередній вузoл стеку
+};
+void AddtoStack(stack*&, int);//функція додавання вузла до стеку
+void PrintStack(stack*); //функція друку стеку
+void SearchRepids(stack*&, stack*&); // функція яка 
+void Repid(stack*, stack*&, stack*&);
+void DestroyNode(stack*& node, stack*&); //функція знищення певного вузла
+void DestroyStack(stack*&); //функція знищення всього стеку
+
+int main()
+{
+    int num[8] = { 1,3,1,4,3,12,7,4 }; //довільний числовий масив з якого сформуємо стек
+    stack* head = NULL; //вузол який завжди  вказуватиме  на перший елемент стеку
+    stack* tail = NULL; //вузол який завжди  вказуватиме  на останній елемент стеку
+    stack* pq; 
+    pq = new stack;
+    pq->info = num[0]; // формуємо перший  вузл стеку
+    head = tail = pq;
+    for (int i = 1; i <8; i++) //формуємо наступні елементи стеку
+    {
+        AddtoStack(tail,num[i]);
+    }
+    cout << "Stack wiht repeted elements: ";
+    PrintStack(head);
+	SearchRepids(head,tail);
+    cout << "\nStack wiht no repeted elements: ";
+	PrintStack(head);
+    DestroyStack(tail);
+    return 0;
+}
+
+
+void AddtoStack(stack*& tail, int a) //функція додавання вузлів до стеку
+{
+    stack* tmp = new stack;
+    tmp->info = a;
+    tmp->prev = tail;
+    tail->adr = tmp;
+    tail = tmp;
+}
+void PrintStack(stack* node) //функція друк стеку
+{
+    while (node)
+    {
+        cout << node->info << ' '; //друк інформаційної частини
+        node = node->adr; //перехід до наступного елементу
+    }
+    cout << endl;
+}
+
+void SearchRepids(stack* &node, stack*& tail)
+{
+	stack* Temp = node;  //створюємо вказівник на стек, із цього стеку  будемо брати елементи для порівняння (стек 2 3 4 1 2)
+
+	stack *search = Temp->adr; // вказівник, який буде містити частину стеку у якій шукатимемо схожі елементи (стек   3 4 1 2)
+	stack* cur = new stack;  //вказівник який зберігатиме змінну-порівняння 
+	cur->info = Temp->info;  //беремо змінну-порівняння із стеку Temp
+	while (search != NULL ) //якщо стек у якому проводитимемо пошук елемента не пустий заходимо у цикл
+	{
+		
+        Repid(cur, search,tail); // викликаємо функцію у яку передаємо ділянку стеку і елемент пошуку 
+		Temp = search;   //змінюємо стек із якого братимемо елементи для пошуку на новий(щойно зміняний)
+		cur->info = Temp->info; // беремо інший елемент для порівняння із стеку
+		search = Temp->adr;  // змінюємо наш стек у якому шукатимемо однакові елементи(змінюємо  пропускаючи ту змінну яку взяли за cur )
+	}
+};
+void Repid(stack*cur,stack *&search, stack*& tail) //функція у якій проходимося по нашому переданому стеку і порівнюємо всі елементи з шуканим елементом, якщо вони співпадають то вилучаємо його)
+{
+	if (cur)
+	{
+		stack* temp = search; //додатковий стек , щоб не загубити зв'язок з елементом, адже далі ми маємо повернути вказівник на стек search і рухатимося на одну змінну в право
+
+        while (temp->adr != NULL)  //проходимося по всьому стеку у пошуку однакового елемнта з нашим cur
+        {
+            stack* temp1 = temp->adr;
+            if (cur->info == temp1->info) { DestroyNode(temp, tail); }
+            if (temp->adr != NULL){ temp = temp->adr; }
+           
+		}	
+	}
+}
+
+void DestroyNode(stack*& node, stack*& tail) //функція знищення певного вузла і встановлення нових зв'язків
+{
+    stack* node2 = node->adr;       //node- попередній вузол від знищуваного   node2- вузол який маємо знищити
+
+    // перевіряємо чи раптом  node2 не кінцевий елемент стеку 
+
+    if (node2->adr == NULL)        // після  node2 немає вузла, тому вилучаємо його і node робимо хвостом стеку
+    {
+        node->adr = NULL; tail = node;  
+    }
+    if (node2->adr != NULL)  // після node2 є вузол тому після вилучення перестановлюємо звязок з node і node3
+    {
+        stack* node3 = node->adr->adr;
+        node->adr = node3;
+        node3->prev = node;
+       
+    }
+    delete node2;
+}
+
+void DestroyStack(stack*& tail) // функція знищення всього стеку
+{
+    stack* next;      
+    while (tail)
+    {
+        next = tail->prev;
+        delete tail;
+        tail = next;
+    }
+}

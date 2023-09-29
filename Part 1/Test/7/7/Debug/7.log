@@ -1,0 +1,3 @@
+﻿  main.cpp
+D:\Робочий стіл\7\7\main.cpp(11,9): warning C4101: 'x': unreferenced local variable
+  7.vcxproj -> D:\Робочий стіл\7\Debug\7.exe

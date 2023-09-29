@@ -1,0 +1,3 @@
+﻿  Source.cpp
+D:\Робочий стіл\папка\Project1\Project1\Source.cpp(69,10): warning C4101: 'ch': unreferenced local variable
+  Project1.vcxproj -> D:\Робочий стіл\папка\Project1\x64\Debug\Project1.exe

@@ -1,0 +1,4 @@
+﻿  Вітюк Аліни_ПМ11.cpp
+D:\Робочий стіл\Study\Алгоритми та програмування\Eкз\Коди\1\1\Вітюк Аліни_ПМ11.cpp(35,21): warning C4566: character represented by universal-character-name '\u02B9' cannot be represented in the current code page (1251)
+D:\Робочий стіл\Study\Алгоритми та програмування\Eкз\Коди\1\1\Вітюк Аліни_ПМ11.cpp(42,17): warning C4566: character represented by universal-character-name '\u02B9' cannot be represented in the current code page (1251)
+  1.vcxproj -> D:\Робочий стіл\Study\Алгоритми та програмування\Eкз\Коди\1\Debug\1.exe

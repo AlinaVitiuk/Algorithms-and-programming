@@ -1,0 +1,236 @@
+---------3---------
+//Зчитати з файлу input.txt символи і записати у файл output.txt лише цифри. Якщо серед
+//зчитаних символів цифри відсутні, то вивести у консоль відповідне повідомлення.
+
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+using namespace std;
+int main()
+{
+    SetConsoleOutputCP(1251); //встановлення кодування Windows-1251 для виведення даних
+    char ch;
+    int n=0;
+    ifstream input("input.txt"); //відкриття файлу input.txt
+    if (input.is_open()) { 
+        ofstream output("output.txt"); //створення нового файлу output.txt
+        while (input.get(ch)) { 
+            if (isdigit(ch)) { //пошук серед символів цифр
+                output << ch;
+                n++;
+            }
+        }
+        if (n == 0) //якщо цифр не знайдено
+        {
+            cout << "У файлi input.txt не знайдено цифр\n";
+        }
+        if (n != 0) //цифри знайдено
+        {
+            cout << "У файл output.txt записано " << n << " цифр з файлу input.txt\n";
+        }
+        output.close(); //закриття потоку вводу - виводу файлу output.txt
+    }
+    else
+    {
+        cout << "Файл input.txt не знайдено!\n";
+    }
+    input.close(); //закриття потоку вводу - виводу файлу input.txt
+    return 0;
+}
+
+
+
+---------4---------
+//Зчитати з файлу input.txt символи і записати у файл output.txt лише розділові знаки.
+//Якщо серед зчитаних символів розділові знаки відсутні, то записати у файл output.txt
+//відповідне повідомлення.
+
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+using namespace std;
+int main()
+{
+    SetConsoleOutputCP(1251); //встановлення кодування Windows-1251 для виведення даних
+    char ch;
+    int n=0;
+    ifstream input("input.txt"); //відкриття файлу input.txt
+    if (input.is_open()) { 
+        ofstream output("output.txt"); //створення нового файлу output.txt
+        while (input.get(ch)) { 
+            if (ispunct(ch)) { //пошук серед символів розділових знаків
+                output << ch;
+                n++;
+            }
+        }
+        if (n == 0) //якщо розділові знаки не знайдено
+        {
+            cout << "У файлi input.txt не знайдено розділових знаків\n";
+        }
+        if (n != 0) //розділові знаки знайдено
+        {
+            cout << "У файл output.txt записано " << n << " розділових знаків з файлу input.txt\n";
+        }
+        output.close(); //закриття потоку вводу - виводу файлу output.txt
+    }
+    else
+    {
+        cout << "Файл input.txt не знайдено!\n";
+    }
+    input.close(); //закриття потоку вводу - виводу файлу input.txt
+    return 0;
+}
+
+
+---------5---------
+//Зчитати з файлу input.txt символи і записати у файл output.txt лише букви.Якщо серед
+//зчитаних символів букви відсутні, то записати у файл output.txt відповідне повідомлення.
+
+#include <iostream>
+#include <fstream>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+using namespace std;
+int main()
+{
+    SetConsoleOutputCP(1251); //встановлення кодування Windows-1251 для виведення даних
+    char ch;
+    int n=0;
+    ifstream input("input.txt"); //відкриття файлу input.txt
+    if (input.is_open()) { 
+        ofstream output("output.txt"); //створення нового файлу output.txt
+        while (input.get(ch)) { 
+            if (isalpha(ch)) { //пошук серед символів букв
+                output << ch;
+                n++;
+            }
+        }
+        if (n == 0) //якщо букви не знайдено
+        {
+            cout << "У файлi input.txt не знайдено букв\n";
+        }
+        if (n != 0) //букви знайдено
+        {
+            cout << "У файл output.txt записано " << n << " букв з файлу input.txt\n";
+        }
+        output.close(); //закриття потоку вводу - виводу файлу output.txt
+    }
+    else
+    {
+        cout << "Файл input.txt не знайдено!\n";
+    }
+    input.close(); //закриття потоку вводу - виводу файлу input.txt
+    return 0;
+}
+
+---------6---------
+//Зчитати з файлу input.txt число у двійковій системі числення і вивести його у консоль.
+//Перевести зчитане число у десяткову систему числення і записати результат у файл
+//output.txt.
+
+#include<fstream>
+#include<cstring>
+#include<iostream>
+#include <Windows.h>
+#pragma warning(disable:4996)
+
+using namespace std;
+
+const char* f_name = "input.txt";
+const char* g_name = "output.txt";
+
+bool PrintFtoG(const char*, const char*, int&);
+bool AddG(const char*, int);
+bool Chusl0(const char*, int&, int);
+
+int main()
+{
+	SetConsoleOutputCP(1251); //встановлення кодування Windows-1251 для виведення даних
+	int size = 0;
+	int chuslo = 0;
+	int count = 0;
+	if (!PrintFtoG(f_name, g_name, size)) {
+		cout << "\nФайл " << f_name << " не створено.";
+		return 1;
+	}
+	if (!Chusl0(g_name, chuslo, size)) {
+		cout << "\nERROR";
+		return 1;
+	}
+	if (!AddG(g_name, chuslo)) {
+		cout << "\nФайл " << g_name << " не відображається.";
+		return 1;
+	}
+	cout << endl << "\nКІНЕЦЬ\n";
+	return 0;
+}
+
+bool Chusl0(const char* g_name, int& sum, int size)
+{
+	fstream file;//відкриття потоку вводу(читання)
+	file.open(g_name, ios::out | ios::in);//відкриття файлу
+	if (!file.is_open()) {//перевірка відкриття файлу
+		cout << "\nШлях до файлу " << g_name << " не знайдено.";
+		return 1;
+	}
+
+
+	char ch;                      //посимвольне читання і перезапис у інший файл
+	for (int i = size - 1; i >= 0; i--)
+	{
+		if (file.get(ch))
+		{
+			char* ch1 = &ch;
+			sum += (atoi(ch1)) * int(pow(2, i));
+		}
+	}
+
+	return true;
+	file.close();
+}
+
+bool AddG(const char* g_name, int chuslo)
+{
+	ofstream fout;//відкриття потоку вводу
+	fout.open(g_name);//відкриття файлу для дописування
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nШлях до файлу " << g_name << " не знайдено.";
+		return false;
+	}
+	
+	fout << chuslo;
+	return true;
+	fout.close();
+	return true;
+}
+
+
+bool PrintFtoG(const char* f_name, const char* g_name, int& size) {
+	ifstream fin;//відкриття потоку вводу(читання)
+	fin.open(f_name);//відкриття файлу
+	if (!fin.is_open()) {//перевірка відкриття файлу
+		cout << "\nШлях до файлу  " << f_name << " не знайдено.";
+		return false;
+	}
+	ofstream fout;//відкриття потоку запису
+	fout.open(g_name);//відкриття файлу
+	if (!fout.is_open()) {//перевірка відкриття файлу
+		cout << "\nШлях до файлу  " << g_name << " не знайдено.";
+		return false;
+	}
+	char ch;
+	cout << "\nЧисло у двійковій системі числення з файлу input.txt - ";
+	while (fin.get(ch)) {//посимвольне читання і перезапис у інший файл
+		fout << ch;
+		cout << ch;
+		size++;
+	}
+	fin.close();
+	fout.close();
+	return true;
+}

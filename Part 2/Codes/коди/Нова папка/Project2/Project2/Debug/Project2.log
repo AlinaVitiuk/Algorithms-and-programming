@@ -1,0 +1,16 @@
+﻿  Source.cpp
+D:\Робочий стіл\Project2\Project2\Source.cpp(71,17): error C3861: getch: идентификатор не найден
+D:\Робочий стіл\Project2\Project2\Source.cpp(105,15): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+D:\Робочий стіл\Project2\Project2\Source.cpp(124,22): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Робочий стіл\Project2\Project2\Source.cpp(141,22): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Робочий стіл\Project2\Project2\Source.cpp(160,14): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Робочий стіл\Project2\Project2\Source.cpp(171,10): error C4996: 'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Робочий стіл\Project2\Project2\Source.cpp(189,50): error C2065: month_name: необъявленный идентификатор
+D:\Робочий стіл\Project2\Project2\Source.cpp(189,25): warning C4477: "sprintf": в строке форматирования "%03s" требуется аргумент типа "char *", но вариативный аргумент "2" имеет тип "int"
+D:\Робочий стіл\Project2\Project2\Source.cpp(189,25): warning C4473: "sprintf": передано недостаточно аргументов для строки формата
+D:\Робочий стіл\Project2\Project2\Source.cpp(189,25): message : заполнители и их параметры ожидают переменное число аргументов в количестве 3, но было предоставлено 2
+D:\Робочий стіл\Project2\Project2\Source.cpp(189,25): message : отсутствующий вариативный аргумент "3" требуется для строки форматирования "%d"
+D:\Робочий стіл\Project2\Project2\Source.cpp(189,10): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Робочий стіл\Project2\Project2\Source.cpp(190,9): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  Source2.cpp
+  Создание кода...

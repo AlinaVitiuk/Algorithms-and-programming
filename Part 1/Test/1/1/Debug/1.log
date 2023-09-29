@@ -1,0 +1,3 @@
+﻿  main.cpp
+D:\Робочий стіл\Study\Алгоритми та програмування\Контрольні роботи\КР з АП_2\1\1\main.cpp(20,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  1.vcxproj -> D:\Робочий стіл\Study\Алгоритми та програмування\Контрольні роботи\КР з АП_2\1\Debug\1.exe
